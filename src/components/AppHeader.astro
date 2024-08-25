@@ -7,19 +7,19 @@ import Frame from "./Frame.astro";
 
 const links = [
     {
-        to: "/#projects",
+        to: "#projects",
         label: "Projects",
     },
     {
-        to: "/#about-me",
+        to: "#about-me",
         label: "About Me",
     },
     {
-        to: "/#blog",
+        to: "#blog",
         label: "Blog",
     },
     {
-        to: "/#contact",
+        to: "#contact",
         label: "Contact",
     },
 ];
@@ -45,13 +45,15 @@ const links = [
                             <div class="relative w-full text-gray-600 dark:text-gray-300">
                                 <ul class="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                                     {
-                                        links.map((link) => (
+                                        links.map((link) => {
+                                            console.log(link);
+                                            return (
                                             <li>
                                                 <a href={link.to} class="px-2 py-1 hover:bg-gray-950/5 hover:text-gray-950 rounded-[--btn-border-radius] block transition dark:hover:text-white md:px-4 dark:hover:bg-white/5">
                                                     <span>{link.label}</span>
                                                 </a>
                                             </li>
-                                        ))
+                                        )})
                                     }
                                 </ul>
                             </div>
