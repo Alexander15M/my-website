@@ -1,24 +1,34 @@
 ---
 import Container from "./Container.astro";
+import { Icon } from 'astro-icon/components'
 ---
 
-<section id="about-me">
+<style>
+    .highlight {
+        transition: color 0.3s ease;
+    }
+    .highlight:hover {
+        color: #3b82f6; /* blue-500 */
+    }
+</style>
+
+<section id="about-me" class="bg-gray-50 dark:bg-gray-800 py-12 rounded-lg shadow-md">
     <Container>
         <div class="lg:w-2/3 text-center mx-auto">
+            <Icon name="mdi:account" class="w-16 h-16 mx-auto mb-4 text-blue-600 dark:text-blue-400" />
             <h2 class="text-gray-900 dark:text-white font-bold text-2xl sm:text-3xl md:text-5xl my-12">About Me</h2>
         </div>
-        <div class="p-[--card-padding] overflow-hidden lg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
-            <div class="max-w-4xl w-full h-fit m-auto space-y-12">
-                <img src="/product-screenshot.webp" alt="tailus product screenshot" loading="lazy" width="2481" height="1626">
-            </div>
-        </div>
-        <div class="mt-12 grid sm:grid-cols-2 gap-4 sm:gap-12 max-w-3xl w-full mx-auto">
-            <div>
-                <h2 class="text-gray-950 dark:text-white text-2xl font-semibold">A technology-first approach to payments and finance</h2>
-            </div>
-            <div class="space-y-3">
-                <p class="text-gray-600 dark:text-gray-400">Natus ad ipsum pariatur autem, <span class="text-gray-950 dark:text-white font-medium">fugit laborum in atque</span> amet obcaecati? Nisi minima aspernatur, quidem nulla cupiditate nam consequatur eligendi magni adipisci.</p>
-                <p class="text-gray-600 dark:text-gray-400">Nisi minima aspernatur, quidem nulla cupiditate nam consequatur eligendi magni adipisci.</p>
+        <div class="mt-12 max-w-3xl w-full mx-auto">
+            <div class="space-y-3 leading-relaxed">
+                <p class="text-gray-600 dark:text-gray-400">
+                    Hi! I'm Alexander Meneses, a physicist turned software engineer with a passion forprogramming and data science. With over 4 years of experience in the industry, I specialize in building scalable web applications and data-driven apps. I've had the opportunity to work on different US startups, which has shaped my expertise in many areas of web development.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Outside of work, I enjoy science, programming, reading and dancing latin rhythms, speciallysalsa. I'm always eager to learn and take on new challenges, and I'm currently focused on improving my skills in AI and machine learning.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    I believe in continuous learning, hard work and perseverance and I'm excited to connect with like-minded professionals who share my passion for AI, data science and web development.
+                </p>
             </div>
         </div>
     </Container>
