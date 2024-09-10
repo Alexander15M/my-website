@@ -46,7 +46,6 @@ const links = [
                                 <ul class="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                                     {
                                         links.map((link) => {
-                                            console.log(link);
                                             return (
                                             <li>
                                                 <a href={link.to} class="px-2 py-1 hover:bg-gray-950/5 hover:text-gray-950 rounded-[--btn-border-radius] block transition dark:hover:text-white md:px-4 dark:hover:bg-white/5">
@@ -59,17 +58,6 @@ const links = [
                             </div>
                         </Frame>
                     </div>
-                    <!-- <div class="w-full my-6 border-t dark:border-[--ui-dark-border-color] pt-6 lg:mt-0 flex gap-2 lg:my-0 lg:border-none lg:pt-0">
-                        <a href="/login" class={cn(ghostButton.gray.sm, "hidden lg:flex")}>
-                            Sign In
-                        </a>
-                        <a href="/login" class={cn(outlinedButton.gray.sm, "w-full justify-center md:w-fit lg:hidden")}>
-                            Sign In
-                        </a>
-                        <a href="/register" class={cn(button.neutral.sm, "w-full md:w-fit")}>
-                            Get Started
-                        </a>
-                    </div> -->
                 </div>
             </div>
         </Container>
