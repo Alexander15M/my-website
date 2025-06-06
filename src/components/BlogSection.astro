@@ -1,68 +1,169 @@
 ---
 import { cn } from "@lib/utils";
 import Container from "./Container.astro";
-import {progress} from "@tailus/themer-progress"
+import { softGradientVariant as card } from "@tailus/themer-card";
+
+// Get all blog posts (.md files only) and sort by date (newest first)
+let allPosts = [];
+try {
+  allPosts = await Astro.glob("../pages/blog/*.md");
+} catch (error) {
+  // Handle case where no blog posts exist
+  allPosts = [];
+}
+
+const sortedPosts = allPosts
+  .filter((post) => post.frontmatter?.title) // Only include posts with titles
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.pubDate).getTime() -
+      new Date(a.frontmatter.pubDate).getTime()
+  );
+
+// Get the latest 3 posts for display
+const latestPosts = sortedPosts.slice(0, 3);
+const hasMorePosts = sortedPosts.length > 3;
+
+// Helper function to format date
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// Helper function to get blog post URL
+function getBlogUrl(url: string) {
+  return url.replace("/src/pages", "").replace(".md", "");
+}
 ---
 
-<section  id="blog">
-    <Container>
-        <div class="lg:w-2/3 text-center mx-auto">
-            <h2 class="text-gray-900 dark:text-white font-bold text-2xl sm:text-3xl md:text-5xl my-12">My Blog</h2>
-        </div>
-        <div class="text-center">
-            <h2 class="text-3xl text-gray-950 dark:text-white font-semibold md:text-4xl">Faster than any alternative</h2>
-            <p class="mt-4 text-gray-600 dark:text-gray-400">Harum quae dolore orrupti aut temporibus ariatur.</p>
-        </div>
-        <div class="my-12 p-[--card-padding] overflow-hidden lg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
-            <div class="max-w-3xl w-full h-fit m-auto space-y-12">
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-600 dark:text-gray-400">
-                        <span class="text-gray-950 dark:text-white">Islands optimize your website</span>
-                        like no other web framework can.
-                    </h3>
+<section id="blog" class="scroll-mt-24">
+  <Container>
+    <div class="lg:w-2/3 text-center mx-auto">
+      <h2
+        class="text-gray-900 dark:text-white font-bold text-2xl sm:text-3xl md:text-5xl my-12"
+      >
+        Latest Blog Posts
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 text-lg mb-8">
+        Thoughts, tutorials, and insights about development, technology, and
+        more.
+      </p>
+    </div>
+
+    {
+      latestPosts.length > 0 ? (
+        <div class="space-y-4 sm:grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:space-y-0 sm:gap-4">
+          {latestPosts.map((post) => (
+            <a
+              href={getBlogUrl(post.url!)}
+              class={cn(
+                card.outer,
+                "block hover:scale-105 transition-transform duration-200"
+              )}
+            >
+              <div
+                class={cn(card.inner, "flex flex-col justify-between h-full")}
+              >
+                {post.frontmatter.coverImage ? (
+                  <div class="h-32 overflow-hidden rounded-lg">
+                    <img
+                      src={post.frontmatter.coverImage}
+                      alt={post.frontmatter.title}
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div class="flex items-center justify-center h-32 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+                    <svg
+                      class="w-16 h-16 text-blue-600 dark:text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </div>
+                )}
+                <div class="mt-6 space-y-2">
+                  <h3 class="text-gray-950 dark:text-white text-lg font-medium">
+                    {post.frontmatter.title}
+                  </h3>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                    {formatDate(post.frontmatter.pubDate)} • By{" "}
+                    {post.frontmatter.author}
+                  </p>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    {post.frontmatter.description}
+                  </p>
                 </div>
-                <div class="space-y-6">
-                    <div>
-                        <div class={progress.root}>
-                            <div class={cn(progress.indicator.gradient, "w-[98%] from-primary-600 to-accent-300")}></div>
-                        </div>
-                        <div class={progress.message}>Astro 98%</div>
-                    </div>
-                    <div>
-                        <div class={progress.root}>
-                            <div class={cn(progress.indicator.gradient, "w-[68%] from-gray-600 to-gray-400")}></div>
-                        </div>
-                        <div class={progress.message}>Gatsby 68%</div>
-                    </div>
-                    <div>
-                        <div class={progress.root}>
-                            <div class={cn(progress.indicator.gradient, "w-[63%] from-gray-600 to-gray-400")}></div>
-                        </div>
-                        <div class={progress.message}>Next.js 63%</div>
-                    </div>
-                    <div>
-                        <div class={progress.root}>
-                            <div class={cn(progress.indicator.gradient, "w-[58%] from-gray-600 to-gray-400")}></div>
-                        </div>
-                        <div class={progress.message}>WordPress 58%</div>
-                    </div>
-                    <div>
-                        <div class={progress.root}>
-                            <div class={cn(progress.indicator.gradient, "w-[54%] from-gray-600 to-gray-400")}></div>
-                        </div>
-                        <div class={progress.message}>Nuxt 54%</div>
-                    </div>
-                </div>
-            </div>
+              </div>
+            </a>
+          ))}
         </div>
-        <div class="grid sm:grid-cols-2 gap-4 sm:gap-12 max-w-3xl w-full mx-auto">
-            <div>
-                <h3 class="text-gray-950 dark:text-white text-2xl font-semibold">Development is carried out by passionate developers</h3>
-            </div>
-            <div class="space-y-3">
-                <p class="text-gray-600 dark:text-gray-400">Natus ad ipsum pariatur autem, <span class="text-gray-950 dark:text-white font-medium">fugit laborum in atque</span> amet obcaecati? Nisi minima aspernatur, quidem nulla cupiditate nam consequatur eligendi magni adipisci.</p>
-                <p class="text-gray-600 dark:text-gray-400">Nisi minima aspernatur, quidem nulla cupiditate nam consequatur eligendi magni adipisci.</p>
-            </div>
+      ) : (
+        <div class="text-center py-16">
+          <div class="flex items-center justify-center h-32 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/20 dark:to-gray-900/20 rounded-lg mx-auto w-32 mb-6">
+            <svg
+              class="w-16 h-16 text-gray-400 dark:text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+          </div>
+          <h3 class="text-gray-950 dark:text-white text-lg font-medium mb-2">
+            More Posts Coming Soon
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400">
+            Check back later for articles about development, technology
+            insights, and project updates.
+          </p>
         </div>
-    </Container>
+      )
+    }
+
+    <!-- View All Blog Posts Button - Only show if there are more than 3 posts -->
+    {
+      hasMorePosts && (
+        <div class="text-center mt-12">
+          <a
+            href="/blog"
+            class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+          >
+            View All Blog Posts
+            <svg
+              class="w-5 h-5 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
+      )
+    }
+  </Container>
 </section>

@@ -1,0 +1,96 @@
+---
+import Layout from "./Layout.astro";
+import Container from "@components/Container.astro";
+
+export interface Props {
+  title: string;
+  description?: string;
+  pubDate: string;
+  author?: string;
+  coverImage?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  author = "Your Name",
+  coverImage,
+} = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout>
+  <main class="pt-20 pb-16">
+    <Container>
+      <!-- Cover Image -->
+      {
+        coverImage && (
+          <div class="mb-12 -mx-6 sm:-mx-12">
+            <img
+              src={coverImage}
+              alt={title}
+              class="w-full h-64 md:h-96 object-cover rounded-lg"
+            />
+          </div>
+        )
+      }
+
+      <!-- Blog Header -->
+      <div class="mb-12">
+        <div class="flex items-center gap-4 mb-6">
+          <a
+            href="/blog"
+            class="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+          >
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Blog
+          </a>
+        </div>
+
+        <h1
+          class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+        >
+          {title}
+        </h1>
+
+        {
+          description && (
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-6 max-w-3xl">
+              {description}
+            </p>
+          )
+        }
+
+        <div
+          class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400"
+        >
+          <span>By {author}</span>
+          <span>•</span>
+          <time datetime={pubDate}>{formattedDate}</time>
+        </div>
+      </div>
+
+      <!-- Blog Content -->
+      <article class="prose prose-lg dark:prose-invert max-w-none">
+        <slot />
+      </article>
+    </Container>
+  </main>
+</Layout>

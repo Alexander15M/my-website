@@ -6,5 +6,11 @@ import icon from "astro-icon";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), icon()],
-  site: 'https://atom.tailus.io'
+  site: 'https://atom.tailus.io',
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark-dimmed',
+      wrap: true
+    }
+  }
 });
