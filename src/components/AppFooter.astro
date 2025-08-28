@@ -38,12 +38,13 @@ const companyLink = {
     <div
       class="p-6 rounded-[--card-border-radius] bg-gray-50 mx-auto max-w-sm dark:bg-[--card-dark-bg] sm:p-12"
     >
-      <div class="flex">
-        <BrandIcon />
-      </div>
       <div class="mt-12 mb-6">
         <div class="mb-6">
-          <span class="text-gray-950 dark:text-white font-medium">Connect</span>
+          <div class="flex items-center justify-center">
+            <span class="text-gray-950 dark:text-white font-medium"
+              >Connect</span
+            >
+          </div>
           <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
             {
               socialLinks.map((link: Link) => (
@@ -66,13 +67,7 @@ const companyLink = {
           class="text-center pt-4 border-t border-gray-200 dark:border-gray-800"
         >
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            Built by <a
-              href={companyLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:text-primary-600 dark:hover:text-primary-400 transition"
-              >{companyLink.title}</a
-            >
+            Built with Astro
           </p>
         </div>
       </div>
