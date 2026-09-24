@@ -18,10 +18,10 @@ const {
   github,
   demo,
   status,
-} = Astro.props;
+} = Astro.props.frontmatter;
 ---
 
-<Layout>
+<Layout title={title} description={description}>
   <main class="pt-20 pb-16">
     <Container>
       <!-- Project Header -->

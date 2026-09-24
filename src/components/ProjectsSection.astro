@@ -1,5 +1,6 @@
 ---
 import { cn } from "@lib/utils";
+import { publicAsset } from "@lib/publicAsset";
 import Container from "./Container.astro";
 import { softGradientVariant as card } from "@tailus/themer-card";
 
@@ -83,7 +84,10 @@ const fallbackProjects = [
 ];
 
 // Use fallback projects for now (we can enhance this later to read from actual project files)
-const displayProjects = fallbackProjects.slice(0, 5);
+const displayProjects = fallbackProjects.slice(0, 5).map((project) => ({
+  ...project,
+  coverImage: publicAsset(project.coverImage),
+}));
 
 // Icon components
 const icons = {

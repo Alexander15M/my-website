@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import Container from "@components/Container.astro";
+import { publicAsset } from "@lib/publicAsset";
 
 export interface Props {
   title: string;
@@ -16,24 +17,26 @@ const {
   pubDate,
   author = "Your Name",
   coverImage,
-} = Astro.props;
+} = Astro.props.frontmatter;
 
-const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
+const [year, month, day] = pubDate.split("-").map(Number);
+const formattedDate = new Date(year, month - 1, day).toLocaleDateString("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
 });
+const cover = publicAsset(coverImage);
 ---
 
-<Layout>
+<Layout title={title} description={description} image={cover}>
   <main class="pt-20 pb-16">
     <Container>
       <!-- Cover Image -->
       {
-        coverImage && (
+        cover && (
           <div class="mb-12 -mx-6 sm:-mx-12">
             <img
-              src={coverImage}
+              src={cover}
               alt={title}
               class="w-full h-64 md:h-96 object-cover rounded-lg"
             />

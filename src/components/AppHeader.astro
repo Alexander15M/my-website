@@ -1,21 +1,19 @@
 ---
 import BrandLogo from "./BrandLogo.astro";
 import Container from "./Container.astro";
-import { button, ghostButton, outlinedButton } from "@tailus/themer-button";
-import { cn } from "@lib/utils";
 import Frame from "./Frame.astro";
 
 const links = [
   {
-    to: "#projects",
+    to: "/#projects",
     label: "Projects",
   },
   {
-    to: "#about-me",
+    to: "/#about-me",
     label: "About Me",
   },
   {
-    to: "#blog",
+    to: "/#blog",
     label: "Blog",
   },
   {
@@ -23,7 +21,7 @@ const links = [
     label: "Widget",
   },
   {
-    to: "#contact",
+    to: "/#contact",
     label: "Contact",
   },
 ];
@@ -42,7 +40,8 @@ const links = [
 
           <div class="relative flex max-h-10 items-center lg:hidden">
             <button
-              aria-label="humburger"
+              aria-label="Open menu"
+              aria-expanded="false"
               id="hamburger"
               class="relative -mr-6 p-6"
             >
@@ -69,7 +68,7 @@ const links = [
         </div>
         <div
           id="navlinks"
-          class="hidden flex-wrap lg:flex gap-6 items-center w-full lg:w-fit"
+          class="relative z-20 hidden flex-wrap lg:flex gap-6 items-center w-full lg:w-fit"
         >
           <div class="lg:fixed lg:inset-x-0 lg:size-fit lg:m-auto">
             <Frame>
@@ -100,3 +99,33 @@ const links = [
     </Container>
   </nav>
 </header>
+
+<script>
+  const hamburger = document.querySelector("#hamburger");
+  const navLinks = document.querySelector("#navlinks");
+  const layer = document.querySelector("#navLayer");
+  const line = document.querySelector("#line");
+  const line2 = document.querySelector("#line2");
+
+  function setOpen(open: boolean) {
+    hamburger?.setAttribute("aria-expanded", open ? "true" : "false");
+    hamburger?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    navLinks?.classList.toggle("hidden", !open);
+    navLinks?.classList.toggle("flex", open);
+    layer?.classList.toggle("scale-y-0", !open);
+    layer?.classList.toggle("scale-y-100", open);
+    line?.classList.toggle("translate-y-[6px]", open);
+    line?.classList.toggle("rotate-45", open);
+    line2?.classList.toggle("-translate-y-[2px]", open);
+    line2?.classList.toggle("-rotate-45", open);
+  }
+
+  hamburger?.addEventListener("click", () => {
+    const open = hamburger.getAttribute("aria-expanded") !== "true";
+    setOpen(open);
+  });
+
+  navLinks?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false));
+  });
+</script>

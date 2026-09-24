@@ -1,5 +1,6 @@
 ---
 import { cn } from "@lib/utils";
+import { publicAsset } from "@lib/publicAsset";
 import Container from "./Container.astro";
 import { softGradientVariant as card } from "@tailus/themer-card";
 
@@ -26,7 +27,8 @@ const hasMorePosts = sortedPosts.length > 3;
 
 // Helper function to format date
 function formatDate(dateString: string) {
-  const date = new Date(dateString);
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -57,7 +59,9 @@ function getBlogUrl(url: string) {
     {
       latestPosts.length > 0 ? (
         <div class="space-y-4 sm:grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:space-y-0 sm:gap-4">
-          {latestPosts.map((post) => (
+          {latestPosts.map((post) => {
+            const cover = publicAsset(post.frontmatter.coverImage);
+            return (
             <a
               href={getBlogUrl(post.url!)}
               class={cn(
@@ -68,10 +72,10 @@ function getBlogUrl(url: string) {
               <div
                 class={cn(card.inner, "flex flex-col justify-between h-full")}
               >
-                {post.frontmatter.coverImage ? (
+                {cover ? (
                   <div class="h-32 overflow-hidden rounded-lg">
                     <img
-                      src={post.frontmatter.coverImage}
+                      src={cover}
                       alt={post.frontmatter.title}
                       class="w-full h-full object-cover"
                     />
@@ -108,7 +112,8 @@ function getBlogUrl(url: string) {
                 </div>
               </div>
             </a>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div class="text-center py-16">
