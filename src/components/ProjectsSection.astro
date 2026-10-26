@@ -27,6 +27,17 @@ function getProjectMeta(project: any) {
 // Fallback projects data (your existing projects)
 const fallbackProjects = [
   {
+    title: "HelloHaven",
+    description:
+      "Personal AI assistant that remembers your life, reaches you on any channel, and actually gets things done.",
+    href: "/projects/hellohaven",
+    coverImage: "/images/hellohaven-cover.jpg",
+    icon: "spark",
+    gradient:
+      "from-sky-50 to-indigo-50 dark:from-sky-900/20 dark:to-indigo-900/20",
+    iconColor: "text-sky-600 dark:text-sky-400",
+  },
+  {
     title: "Sara",
     description:
       "Smart Automated Restaurant Assistant for Ordering Food with Voice AI. Streamlining restaurant operations through intelligent voice recognition.",
@@ -84,13 +95,14 @@ const fallbackProjects = [
 ];
 
 // Use fallback projects for now (we can enhance this later to read from actual project files)
-const displayProjects = fallbackProjects.slice(0, 5).map((project) => ({
+const displayProjects = fallbackProjects.map((project) => ({
   ...project,
   coverImage: publicAsset(project.coverImage),
 }));
 
 // Icon components
 const icons = {
+  spark: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>`,
   microphone: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>`,
   shopping: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>`,
   gallery: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>`,
