@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE, GA_MEASUREMENT_ID } from "../consts";
 export interface Props {
   title?: string;
   description?: string;
@@ -40,3 +40,12 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Google tag (gtag.js) -->
+<script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+<script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag(){dataLayer.push(arguments);};
+  window.gtag('js', new Date());
+  window.gtag('config', GA_MEASUREMENT_ID);
+</script>
